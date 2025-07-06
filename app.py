@@ -96,7 +96,26 @@ if menu == "🌍 Info Gempa":
             df_map = df_dirasakan.copy()
             df_map["latitude"] = df_map["Lintang"].str.replace("LS", "").str.replace("LU", "").astype(float)
             df_map["longitude"] = df_map["Bujur"].str.replace("BT", "").astype(float) * -1
-            st.map(df_map[["latitude", "longitude"]], zoom=4)
+           import pydeck as pdk
+
+st.pydeck_chart(pdk.Deck(
+    map_style="mapbox://styles/mapbox/light-v9",
+    initial_view_state=pdk.ViewState(
+        latitude=-2.5,      # Tengah Indonesia
+        longitude=118.0,
+        zoom=4.2,
+        pitch=0,
+    ),
+    layers=[
+        pdk.Layer(
+            'ScatterplotLayer',
+            data=df_map,
+            get_position='[longitude, latitude]',
+            get_color='[200, 30, 0, 160]',
+            get_radius=50000,
+        ),
+    ],
+))
 
             kolom = ["Tanggal", "Jam", "Wilayah", "Magnitude", "Kedalaman", "Dirasakan"]
             st.dataframe(df_map[kolom], use_container_width=True)
