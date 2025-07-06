@@ -54,67 +54,55 @@ if not os.path.exists(DATA_PATH):
 load_local_css("style.css")
 
 # ==== Sidebar Navigasi ====
-menu = st.sidebar.radio("📌 Navigasi", ["🌍 Info Gempa", "📝 Formulir Bantuan", "📊 Data Bantuan"])
+menu = st.sidebar.radio("\ud83d\udccc Navigasi", ["\ud83c\udf0d Info Gempa", "\ud83d\udcdd Formulir Bantuan", "\ud83d\udcca Data Bantuan"])
 
 # ==== Ganti Background Tiap Halaman ====
-if menu == "🌍 Info Gempa":
+if menu == "\ud83c\udf0d Info Gempa":
     set_background("assets/gempa.jpg")
-elif menu == "📝 Formulir Bantuan":
+elif menu == "\ud83d\udcdd Formulir Bantuan":
     set_background("assets/bantuan.jpg")
-elif menu == "📊 Data Bantuan":
+elif menu == "\ud83d\udcca Data Bantuan":
     set_background("assets/statistik.jpg")
 
 # ==== Header ====
 with st.container():
     st.markdown("""
         <div class="transparent-box">
-            <h2>🌐 GempaLog.ID</h2>
+            <h2>\ud83c\udf10 GempaLog.ID</h2>
             <h4>Sistem Bantuan Logistik Bencana Gempa</h4>
         </div>
     """, unsafe_allow_html=True)
 
 # ==== Halaman: Info Gempa ====
-if menu == "🌍 Info Gempa":
+if menu == "\ud83c\udf0d Info Gempa":
     with st.container():
         st.markdown("""
 <div class="transparent-box">
-    <h3>📡 Informasi Gempa Real-time dari BMKG</h3>
+    <h3>\ud83d\udce1 Informasi Gempa Real-time dari BMKG</h3>
 </div>
 """, unsafe_allow_html=True)
 
-
         df_terkini = ambil_data_gempa_terkini()
         if not df_terkini.empty:
-            st.subheader("📄 Gempa Terkini")
+            st.subheader("\ud83d\udcc4 Gempa Terkini")
             st.dataframe(df_terkini[["Tanggal", "Jam", "Wilayah", "Magnitude", "Kedalaman", "Potensi"]].head(10), use_container_width=True)
         else:
             st.warning("Gagal mengambil data gempa terkini.")
 
         df_dirasakan = ambil_data_gempa_dirasakan()
         if not df_dirasakan.empty:
-            st.subheader("🌐 Gempa Dirasakan")
+            st.subheader("\ud83c\udf10 Gempa Dirasakan")
             df_map = df_dirasakan.copy()
             df_map["latitude"] = df_map["Lintang"].str.replace("LS", "").str.replace("LU", "").astype(float)
             df_map["longitude"] = df_map["Bujur"].str.replace("BT", "").astype(float) * -1
-           import pandas as pd
-import streamlit as st
+            df_map = df_map.dropna(subset=["latitude", "longitude"])
 
-# Data gempa (misalnya df_map sudah ada)
-# Pastikan latitude dan longitude sudah bersih dari NaN
-df_map = df_map.dropna(subset=["latitude", "longitude"])
+            df_center = pd.DataFrame({"latitude": [-2.5], "longitude": [118.0]})
+            df_combined = pd.concat([df_map[["latitude", "longitude"]], df_center], ignore_index=True)
 
-# Tambahkan 1 titik di tengah Indonesia sebagai panduan zoom
-df_center = pd.DataFrame({
-    'latitude': [-2.5],
-    'longitude': [118.0]
-})
-
-# Gabungkan dengan titik gempa
-df_combined = pd.concat([df_map[["latitude", "longitude"]], df_center], ignore_index=True)
-
-# Tampilkan peta
-st.map(df_combined, zoom=4)
-
+            st.markdown("<div class='map-box'>", unsafe_allow_html=True)
+            st.map(df_combined, zoom=4)
+            st.markdown("</div>", unsafe_allow_html=True)
 
             kolom = ["Tanggal", "Jam", "Wilayah", "Magnitude", "Kedalaman", "Dirasakan"]
             st.dataframe(df_map[kolom], use_container_width=True)
@@ -123,22 +111,21 @@ st.map(df_combined, zoom=4)
         st.markdown('</div>', unsafe_allow_html=True)
 
 # ==== Halaman: Formulir Bantuan ====
-elif menu == "📝 Formulir Bantuan":
+elif menu == "\ud83d\udcdd Formulir Bantuan":
     with st.container():
-        # Tampilkan box putih transparan di belakang formulir
         st.markdown("""
             <div class="transparent-box">
-                <h3>📦 Formulir Pengiriman Bantuan</h3>
+                <h3>\ud83d\udce6 Formulir Pengiriman Bantuan</h3>
             </div>
         """, unsafe_allow_html=True)
 
         with st.container():
             with st.form("form_bantuan"):
-                nama = st.text_input("👤 Nama Pengirim")
-                jenis = st.selectbox("📦 Jenis Bantuan", ["Makanan", "Obat-obatan", "Pakaian", "Tenda", "Lainnya"])
-                jumlah = st.number_input("🔢 Jumlah", min_value=1)
-                lokasi = st.text_input("📍 Lokasi Tujuan")
-                submit = st.form_submit_button("📤 Kirim")
+                nama = st.text_input("\ud83d\udc64 Nama Pengirim")
+                jenis = st.selectbox("\ud83d\udce6 Jenis Bantuan", ["Makanan", "Obat-obatan", "Pakaian", "Tenda", "Lainnya"])
+                jumlah = st.number_input("\ud83d\udccf Jumlah", min_value=1)
+                lokasi = st.text_input("\ud83d\udccd Lokasi Tujuan")
+                submit = st.form_submit_button("\ud83d\udce4 Kirim")
 
                 if submit:
                     zona_wib = pytz.timezone("Asia/Jakarta")
@@ -146,33 +133,30 @@ elif menu == "📝 Formulir Bantuan":
                     new_entry = pd.DataFrame([[nama, jenis, jumlah, lokasi, waktu]],
                                              columns=["Nama", "Jenis Bantuan", "Jumlah", "Lokasi", "Waktu"])
                     new_entry.to_csv(DATA_PATH, mode="a", header=False, index=False)
-                    st.success("✅ Data bantuan berhasil disimpan.")
-
+                    st.success("\u2705 Data bantuan berhasil disimpan.")
 
 # ==== Halaman: Data Bantuan ====
-elif menu == "📊 Data Bantuan":
+elif menu == "\ud83d\udcca Data Bantuan":
     with st.container():
         st.markdown("""
         <div class="transparent-box">
-            <h3>📊 Rekap Data Bantuan Masuk</h3>
+            <h3>\ud83d\udcca Rekap Data Bantuan Masuk</h3>
         </div>
         """, unsafe_allow_html=True)
 
         if os.path.exists(DATA_PATH):
             df = pd.read_csv(DATA_PATH)
 
-            # Tabel data
             st.markdown("""
             <div class="transparent-box">
-                <h4>📋 Tabel Data Bantuan</h4>
+                <h4>\ud83d\udccb Tabel Data Bantuan</h4>
             </div>
             """, unsafe_allow_html=True)
             st.dataframe(df, use_container_width=True)
 
-            # Statistik bantuan per jenis
             st.markdown("""
             <div class="transparent-box">
-                <h4>📈 Statistik Bantuan per Jenis</h4>
+                <h4>\ud83d\udcc8 Statistik Bantuan per Jenis</h4>
             </div>
             """, unsafe_allow_html=True)
             st.bar_chart(df["Jenis Bantuan"].value_counts())
