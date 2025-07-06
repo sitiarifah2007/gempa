@@ -15,5 +15,8 @@
 .transparent-box p {
     color: #5A827E;
     margin-bottom: 1rem;
+    html, body, [class*="st-"]:not(.transparent-box):not(.transparent-box *) {
+    color: #ffffff !important;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
 
 }
