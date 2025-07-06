@@ -92,7 +92,7 @@ if menu == "🌍 Info Gempa":
 
         df_dirasakan = ambil_data_gempa_dirasakan()
         if not df_dirasakan.empty:
-            st.subheader("🌐 Gempa Dirasakan (Dengan Peta)")
+            st.subheader("🌐 Gempa Dirasakan")
             df_map = df_dirasakan.copy()
             df_map["latitude"] = df_map["Lintang"].str.replace("LS", "").str.replace("LU", "").astype(float)
             df_map["longitude"] = df_map["Bujur"].str.replace("BT", "").astype(float) * -1
