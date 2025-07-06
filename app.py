@@ -98,10 +98,12 @@ if menu == "🌍 Info Gempa":
             df_map["longitude"] = df_map["Bujur"].str.replace("BT", "").astype(float) * -1
            import pydeck as pdk
 
+df_map = df_map.dropna(subset=["latitude", "longitude"])
+
 st.pydeck_chart(pdk.Deck(
     map_style="mapbox://styles/mapbox/light-v9",
     initial_view_state=pdk.ViewState(
-        latitude=-2.5,      # Tengah Indonesia
+        latitude=-2.5,
         longitude=118.0,
         zoom=4.2,
         pitch=0,
@@ -111,7 +113,7 @@ st.pydeck_chart(pdk.Deck(
             'ScatterplotLayer',
             data=df_map,
             get_position='[longitude, latitude]',
-            get_color='[200, 30, 0, 160]',
+            get_color='[255, 0, 0, 160]',
             get_radius=50000,
         ),
     ],
