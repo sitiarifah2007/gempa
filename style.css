@@ -19,8 +19,8 @@
 }
 /* === 1. Semua teks di seluruh halaman default jadi putih === */
 html, body, [class*="st-"] {
-    color: #F5ECD5 !important;
-    text-shadow: 1px 1px 4px #e3efe0(0, 0, 0, 0.8);
+    color: #7F8CAA !important;
+    text-shadow: 1px 1px 4px #0b0b0b(0, 0, 0, 0.8);
 }
 
 /* === 2. Khusus di dalam kotak transparan: teks tetap gelap === */
@@ -30,7 +30,7 @@ html, body, [class*="st-"] {
 }
 
 section[data-testid="stSidebar"], section[data-testid="stSidebar"] * {
-    color: #7F8CAA !important;
+    color: #0b0b0b !important;
     text-shadow: none !important;
 }
 
