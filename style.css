@@ -30,14 +30,10 @@ html, body, [class*="st-"] {
 }
 
 section[data-testid="stSidebar"], section[data-testid="stSidebar"] * {
-    color: #090040 !important;
+    color: #7F8CAA !important;
     text-shadow: none !important;
 }
 
-section[data-testid="stForm"] label {
-    color: #3D3D3D !important; /* warna tulisan putih */
-    font-weight: bold;
-}
 
 /* === 3. Kotak transparan tetap aktif === */
 .transparent-box {
