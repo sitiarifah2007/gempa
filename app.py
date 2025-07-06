@@ -75,11 +75,9 @@ with st.container():
 
 # ==== Halaman: Info Gempa ====
 if menu == "🌍 Info Gempa":
-    with st.container()
-        st.markdown("""
-        <div class="transparent-box"> 
-         <h3>📡 Informasi Gempa Real-time dari BMKG</h3>
-        """, unsafe_allow_html=True)
+    with st.container():
+        st.markdown('<div class="transparent-box">', unsafe_allow_html=True)
+        st.header("📡 Informasi Gempa Real-time dari BMKG")
 
         df_terkini = ambil_data_gempa_terkini()
         if not df_terkini.empty:
