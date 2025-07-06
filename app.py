@@ -66,10 +66,12 @@ elif menu == "📊 Data Bantuan":
 
 # ==== Header ====
 with st.container():
-    st.markdown('<div class="transparent-box">', unsafe_allow_html=True)
-    st.markdown("## 🌐 GempaLog.ID")
-    st.markdown("#### Sistem Bantuan Logistik Bencana Gempa")
-    st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown("""
+        <div class="transparent-box">
+            <h2>🌐 GempaLog.ID</h2>
+            <h4>Sistem Bantuan Logistik Bencana Gempa</h4>
+        </div>
+    """, unsafe_allow_html=True)
 
 # ==== Halaman: Info Gempa ====
 if menu == "🌍 Info Gempa":
