@@ -13,6 +13,8 @@
 .transparent-box h3,
 .transparent-box h4,
 .transparent-box p {
-    color: #1f2937;
+    color: #ffffff !important;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
     margin-bottom: 1rem;
+    
 }
