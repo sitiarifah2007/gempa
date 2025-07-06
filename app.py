@@ -74,13 +74,32 @@ with st.container():
     """, unsafe_allow_html=True)
 
 # ==== Halaman: Info Gempa ====
-if menu == "🌍 Info Gempa":
+elif menu == "🌍 Info Gempa":
+    set_background("assets/gempa.jpg")
     with st.container():
-        st.markdown("""
-<div class="transparent-box">
-    <h3>📡 Informasi Gempa Real-time dari BMKG</h3>
-</div>
-""", unsafe_allow_html=True)
+        st.markdown('<div class="transparent-box">', unsafe_allow_html=True)
+        st.header("📡 Informasi Gempa Real-time dari BMKG")
+
+        df_terkini = ambil_data_gempa_terkini()
+        if not df_terkini.empty:
+            st.subheader("📄 Gempa Terkini")
+            st.dataframe(df_terkini[["Tanggal", "Jam", "Wilayah", "Magnitude", "Kedalaman", "Potensi"]], use_container_width=True)
+        else:
+            st.warning("Gagal mengambil data gempa terkini.")
+
+        df_dirasakan = ambil_data_gempa_dirasakan()
+        if not df_dirasakan.empty:
+            st.subheader("🌐 Gempa Dirasakan (Dengan Peta)")
+            df_map = df_dirasakan.copy()
+            df_map["latitude"] = df_map["Lintang"].str.replace("LS", "").str.replace("LU", "").astype(float)
+            df_map["longitude"] = df_map["Bujur"].str.replace("BT", "").astype(float) * -1
+            st.map(df_map[["latitude", "longitude"]], zoom=4)
+
+            kolom = ["Tanggal", "Jam", "Wilayah", "Magnitude", "Kedalaman", "Dirasakan"]
+            st.dataframe(df_map[kolom], use_container_width=True)
+        else:
+            st.warning("Gagal mengambil data gempa dirasakan.")
+        st.markdown('</div>', unsafe_allow_html=True)
 
 
         df_terkini = ambil_data_gempa_terkini()
