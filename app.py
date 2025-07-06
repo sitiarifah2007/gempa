@@ -76,8 +76,12 @@ with st.container():
 # ==== Halaman: Info Gempa ====
 if menu == "🌍 Info Gempa":
     with st.container():
-        st.markdown('<div class="transparent-box">', unsafe_allow_html=True)
-        st.header("📡 Informasi Gempa Real-time dari BMKG")
+        st.markdown("""
+<div class="transparent-box">
+    <h3>📡 Informasi Gempa Real-time dari BMKG</h3>
+</div>
+""", unsafe_allow_html=True)
+
 
         df_terkini = ambil_data_gempa_terkini()
         if not df_terkini.empty:
@@ -103,37 +107,56 @@ if menu == "🌍 Info Gempa":
 # ==== Halaman: Formulir Bantuan ====
 elif menu == "📝 Formulir Bantuan":
     with st.container():
-        st.markdown('<div class="transparent-box">', unsafe_allow_html=True)
-        st.header("📦 Formulir Pengiriman Bantuan")
+        # Tampilkan box putih transparan di belakang formulir
+        st.markdown("""
+            <div class="transparent-box">
+                <h3>📦 Formulir Pengiriman Bantuan</h3>
+            </div>
+        """, unsafe_allow_html=True)
 
-        with st.form("form_bantuan"):
-            nama = st.text_input("👤 Nama Pengirim")
-            jenis = st.selectbox("📦 Jenis Bantuan", ["Makanan", "Obat-obatan", "Pakaian", "Tenda", "Lainnya"])
-            jumlah = st.number_input("🔢 Jumlah", min_value=1)
-            lokasi = st.text_input("📍 Lokasi Tujuan")
-            submit = st.form_submit_button("📤 Kirim")
+        with st.container():
+            with st.form("form_bantuan"):
+                nama = st.text_input("👤 Nama Pengirim")
+                jenis = st.selectbox("📦 Jenis Bantuan", ["Makanan", "Obat-obatan", "Pakaian", "Tenda", "Lainnya"])
+                jumlah = st.number_input("🔢 Jumlah", min_value=1)
+                lokasi = st.text_input("📍 Lokasi Tujuan")
+                submit = st.form_submit_button("📤 Kirim")
 
-            if submit:
-                zona_wib = pytz.timezone("Asia/Jakarta")
-                waktu = datetime.now(zona_wib).strftime("%Y-%m-%d %H:%M:%S WIB")
-                new_entry = pd.DataFrame([[nama, jenis, jumlah, lokasi, waktu]],
-                                         columns=["Nama", "Jenis Bantuan", "Jumlah", "Lokasi", "Waktu"])
-                new_entry.to_csv(DATA_PATH, mode="a", header=False, index=False)
-                st.success("✅ Data bantuan berhasil disimpan.")
-        st.markdown('</div>', unsafe_allow_html=True)
+                if submit:
+                    zona_wib = pytz.timezone("Asia/Jakarta")
+                    waktu = datetime.now(zona_wib).strftime("%Y-%m-%d %H:%M:%S WIB")
+                    new_entry = pd.DataFrame([[nama, jenis, jumlah, lokasi, waktu]],
+                                             columns=["Nama", "Jenis Bantuan", "Jumlah", "Lokasi", "Waktu"])
+                    new_entry.to_csv(DATA_PATH, mode="a", header=False, index=False)
+                    st.success("✅ Data bantuan berhasil disimpan.")
+
 
 # ==== Halaman: Data Bantuan ====
 elif menu == "📊 Data Bantuan":
     with st.container():
-        st.markdown('<div class="transparent-box">', unsafe_allow_html=True)
-        st.header("📊 Rekap Data Bantuan Masuk")
+        st.markdown("""
+        <div class="transparent-box">
+            <h3>📊 Rekap Data Bantuan Masuk</h3>
+        </div>
+        """, unsafe_allow_html=True)
 
         if os.path.exists(DATA_PATH):
             df = pd.read_csv(DATA_PATH)
+
+            # Tabel data
+            st.markdown("""
+            <div class="transparent-box">
+                <h4>📋 Tabel Data Bantuan</h4>
+            </div>
+            """, unsafe_allow_html=True)
             st.dataframe(df, use_container_width=True)
 
-            st.markdown("### 📈 Statistik Bantuan per Jenis")
+            # Statistik bantuan per jenis
+            st.markdown("""
+            <div class="transparent-box">
+                <h4>📈 Statistik Bantuan per Jenis</h4>
+            </div>
+            """, unsafe_allow_html=True)
             st.bar_chart(df["Jenis Bantuan"].value_counts())
         else:
             st.info("Belum ada data bantuan.")
-        st.markdown('</div>', unsafe_allow_html=True)
