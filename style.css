@@ -1,0 +1,17 @@
+.transparent-box {
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 2rem;
+    border-radius: 16px;
+    max-width: 1000px;
+    margin: 2rem auto;
+    box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.25);
+}
+
+.transparent-box h1,
+.transparent-box h2,
+.transparent-box h3,
+.transparent-box p,
+.transparent-box span {
+    color: #1f2937;
+    text-align: center;
+}
