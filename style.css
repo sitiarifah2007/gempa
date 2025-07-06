@@ -19,7 +19,7 @@
 }
 /* === 1. Semua teks di seluruh halaman default jadi putih === */
 html, body, [class*="st-"] {
-    color: #9DC08B !important;
+    color: #A94A4A !important;
     text-shadow: 1px 1px 4px #e3efe0(0, 0, 0, 0.8);
 }
 
