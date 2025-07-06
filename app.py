@@ -96,28 +96,25 @@ if menu == "🌍 Info Gempa":
             df_map = df_dirasakan.copy()
             df_map["latitude"] = df_map["Lintang"].str.replace("LS", "").str.replace("LU", "").astype(float)
             df_map["longitude"] = df_map["Bujur"].str.replace("BT", "").astype(float) * -1
-           import pydeck as pdk
+           import pandas as pd
+import streamlit as st
 
+# Data gempa (misalnya df_map sudah ada)
+# Pastikan latitude dan longitude sudah bersih dari NaN
 df_map = df_map.dropna(subset=["latitude", "longitude"])
 
-st.pydeck_chart(pdk.Deck(
-    map_style="mapbox://styles/mapbox/light-v9",
-    initial_view_state=pdk.ViewState(
-        latitude=-2.5,
-        longitude=118.0,
-        zoom=4.2,
-        pitch=0,
-    ),
-    layers=[
-        pdk.Layer(
-            'ScatterplotLayer',
-            data=df_map,
-            get_position='[longitude, latitude]',
-            get_color='[255, 0, 0, 160]',
-            get_radius=50000,
-        ),
-    ],
-))
+# Tambahkan 1 titik di tengah Indonesia sebagai panduan zoom
+df_center = pd.DataFrame({
+    'latitude': [-2.5],
+    'longitude': [118.0]
+})
+
+# Gabungkan dengan titik gempa
+df_combined = pd.concat([df_map[["latitude", "longitude"]], df_center], ignore_index=True)
+
+# Tampilkan peta
+st.map(df_combined, zoom=4)
+
 
             kolom = ["Tanggal", "Jam", "Wilayah", "Magnitude", "Kedalaman", "Dirasakan"]
             st.dataframe(df_map[kolom], use_container_width=True)
