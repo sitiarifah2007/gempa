@@ -19,23 +19,23 @@
 }
 /* === 1. Semua teks di seluruh halaman default jadi putih === */
 html, body, [class*="st-"] {
-    color: #ffffff !important;
-    text-shadow: 1px 1px 4px #D3ECCD(0, 0, 0, 0.8);
+    color: #e3efe0 !important;
+    text-shadow: 1px 1px 4px #e3efe0(0, 0, 0, 0.8);
 }
 
 /* === 2. Khusus di dalam kotak transparan: teks tetap gelap === */
 .transparent-box, .transparent-box * {
-    color: #2F5249!important;
+    color: #5A827E!important;
     text-shadow: none !important;
 }
 
 /* === 3. Kotak transparan tetap aktif === */
 .transparent-box {
-    background-color: #e8ecea(62, 26, 180, 0.15);
+    background-color: #fafdf2(62, 26, 180, 0.15);
     padding: 2rem;
     border-radius: 16px;
     max-width: 1000px;
     margin: 2rem auto;
-    box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 8px 25px rgba(246, 242, 242, 0.25);
 }
 
