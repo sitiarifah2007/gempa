@@ -20,18 +20,18 @@
 /* === 1. Semua teks di seluruh halaman default jadi putih === */
 html, body, [class*="st-"] {
     color: #ffffff !important;
-    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+    text-shadow: 1px 1px 4px #D3ECCD(0, 0, 0, 0.8);
 }
 
 /* === 2. Khusus di dalam kotak transparan: teks tetap gelap === */
 .transparent-box, .transparent-box * {
-    color: #1f2937 !important;
+    color: #2F5249!important;
     text-shadow: none !important;
 }
 
 /* === 3. Kotak transparan tetap aktif === */
 .transparent-box {
-    background-color: #CFFFE2(62, 26, 180, 0.15);
+    background-color: #e8ecea(62, 26, 180, 0.15);
     padding: 2rem;
     border-radius: 16px;
     max-width: 1000px;
